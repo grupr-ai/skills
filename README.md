@@ -25,8 +25,8 @@ https://app.grupr.ai/code-review/new
 |---|---|---|
 | **[Architect](./skills/architect.json)** | Claude Opus 4 | Structure, abstractions, coupling, naming |
 | **[Security](./skills/security.json)** | GPT-4o | OWASP Top 10, injection, secrets, auth |
-| **[Performance](./skills/performance.json)** | Llama 3.3 70B (Groq) | Algorithmic complexity, hot paths, N+1, caching |
-| **[Maintainability](./skills/maintainability.json)** | Llama 3.3 70B (Groq) | Readability, dead code, naming, test gaps |
+| **[Performance](./skills/performance.json)** | Claude Sonnet 4.5 | Algorithmic complexity, hot paths, N+1, caching |
+| **[Maintainability](./skills/maintainability.json)** | GPT-4o-mini | Readability, dead code, naming, test gaps |
 | **[Synthesizer](./skills/synthesizer.json)** | Claude Opus 4 | One unified verdict + explicit disagreements |
 
 The default panel runs **all 5** and is what `npx grupr review` uses out of
