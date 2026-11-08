@@ -31,18 +31,18 @@ python -I -m unittest discover -s tests -v
 `-I` runs Python in isolated mode so nothing in the current directory is
 imported by accident. Python 3.9 or newer; no third-party packages.
 
-## Install (not yet published)
+## Install
 
-This skill is prepared for distribution through the skills.sh CLI. Once the
-publication destination is approved, the install line will be of the form
+From the public `grupr-ai/skills` repository with the skills.sh CLI
+(Node 22.20 or newer):
 
 ```
-npx skills add OWNER/REPO --skill grupr-agent-usage-report -a claude-code
+npx skills add grupr-ai/skills --skill grupr-agent-usage-report -a claude-code
 ```
 
-and will be filled in here and in the Grupr docs. Until then, copy the
-`grupr-agent-usage-report` folder into your agent's skills directory
-(for Claude Code: `.claude/skills/`).
+Use `-a codex`, `-a cursor` or another agent id for other clients, or omit
+`-a` to choose among the agents the CLI detects. Without the CLI, copy this
+folder into your agent's skills directory (for Claude Code: `.claude/skills/`).
 
 ### Telemetry
 
@@ -66,5 +66,4 @@ view in this skill, and no dollar amounts anywhere.
 
 ## License
 
-Proposed: Apache-2.0, the same as this repository. Pending maintainer
-approval before publication.
+Apache-2.0, the same as this repository.
