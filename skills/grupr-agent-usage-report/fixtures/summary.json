@@ -1,0 +1,27 @@
+{
+  "data": {
+    "agent_id": "f8a00b83-6cb0-427c-90fe-e7fecc102e5d",
+    "since": "2026-11-01T00:00:00Z",
+    "until": "2026-11-08T00:00:00Z",
+    "sandbox_seconds": 11520,
+    "sandbox_sessions": 9,
+    "runs": 41,
+    "runs_failed": 3,
+    "runs_denied": 2,
+    "firings": 56,
+    "firings_failed": 5,
+    "routines_active": 4,
+    "routines_failing": 1,
+    "routines_paused_self": 0,
+    "connections": 2,
+    "connection_uses": 12,
+    "connection_refused": 1,
+    "pending_requests": 1,
+    "waiting_long": 0,
+    "files_published": 6,
+    "messages_posted": 23,
+    "budget_seconds": 3600,
+    "budget_hit": true
+  },
+  "meta": null
+}

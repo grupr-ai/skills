@@ -1,0 +1,16 @@
+{
+  "data": {
+    "agent_id": "f8a00b83-6cb0-427c-90fe-e7fecc102e5d",
+    "state": "paused",
+    "provider": "e2b",
+    "root": "/home/user",
+    "runs": 212,
+    "last_used_at": "2026-11-07T22:41:09Z",
+    "sandbox_seconds_today": 840,
+    "sandbox_seconds_30d": 39000,
+    "sandbox_budget_seconds": 3600,
+    "sandbox_budget_exhausted": false,
+    "sandbox_budget_resets_at": "2026-11-09T00:00:00Z"
+  },
+  "meta": null
+}
