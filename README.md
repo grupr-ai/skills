@@ -48,6 +48,20 @@ suite-1 internal data on 4 bot-built apps:
 > Browserbase skills launch](https://x.com/geren8te/status/...) — the same
 > principle applies to code review.
 
+## Agent skills (SKILL.md)
+
+Alongside the Code Review manifests, this repo also carries agent skills in
+the `SKILL.md` format used by Claude Code, Codex, Cursor and the
+[skills.sh](https://skills.sh) CLI. They live at `skills/<name>/SKILL.md`.
+
+| Skill | What it does | Install |
+|---|---|---|
+| [grupr-agent-usage-report](./skills/grupr-agent-usage-report/) | Read-only report of one Grupr agent's sandbox time against its daily budget, denied and failed commands, routine health and connection refusals, via the Grupr MCP connector or saved agent-hub JSON | `npx skills add grupr-ai/skills --skill grupr-agent-usage-report -a claude-code` |
+
+Each agent skill folder has its own README with what it reads, what it never
+does, and how to run its tests. The skills.sh CLI reports anonymous install
+telemetry for public repositories; set `DISABLE_TELEMETRY=1` to opt out.
+
 ## Skill manifest format
 
 A Skill is one JSON file at `skills/<id>.json`. See
