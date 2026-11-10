@@ -38,6 +38,9 @@ TOKEN_PREFIX = "gar_"
 BREAKDOWNS = ("department", "project", "source")
 TOP_N = 10
 NEAR_CAP_PCT = 80.0
+# Below this much spend in the window, "X% of spend is ..." says nothing useful:
+# the share-based recommendations are skipped and the report says why.
+MIN_SPEND_FOR_SHARE_RULES = 10.0
 
 SOURCE_LABELS = {
     "gateway": "gateway",
@@ -128,7 +131,11 @@ def share(part: float, whole: float) -> Optional[int]:
 
 def share_text(part: float, whole: float) -> str:
     p = share(part, whole)
-    return "n/a" if p is None else "%d%%" % p
+    if p is None:
+        return "n/a"
+    if p == 0 and part > 0:
+        return "<1%"  # something was spent; do not round it to nothing
+    return "%d%%" % p
 
 
 def plural(n: int, one: str, many: Optional[str] = None) -> str:
@@ -237,13 +244,18 @@ def recommendations(summary: Dict[str, Any], breakdowns: Dict[str, Optional[Dict
     totals = summary.get("totals") or {}
     total = fnum(totals.get("cost_usd"))
     idle = total <= 0 and fnum(totals.get("calls")) <= 0
+    material = total >= MIN_SPEND_FOR_SHARE_RULES
 
     if idle:
         out.append("No usage was recorded in this window; there is nothing to attribute.")
     else:
+        if not material:
+            out.append(
+                "Spend in this window is under %s, too little for share-based recommendations (department, "
+                "project, model, capture source) to mean anything; they are skipped." % money(MIN_SPEND_FOR_SHARE_RULES))
         dept = breakdowns.get("department")
         unassigned = bucket_cost(dept, "(unassigned)")
-        if total > 0 and unassigned / total >= 0.10:
+        if material and unassigned / total >= 0.10:
             out.append(
                 "%d%% of spend (%s) has no department. Label the virtual keys with a department, or import "
                 "the directory, so it rolls up to a team." % (share(unassigned, total), money(unassigned)))
@@ -251,7 +263,7 @@ def recommendations(summary: Dict[str, Any], breakdowns: Dict[str, Optional[Dict
         proj = breakdowns.get("project")
         no_project = bucket_cost(proj, "(no project)")
         has_projects = any(r.get("bucket") != "(no project)" for r in bucket_rows(proj))
-        if total > 0 and has_projects and no_project / total >= 0.25:
+        if material and has_projects and no_project / total >= 0.25:
             out.append(
                 "%d%% of spend (%s) is not tied to a project. Bind keys to a project, or map repositories to "
                 "one, if project-level numbers matter to you." % (share(no_project, total), money(no_project)))
@@ -280,7 +292,7 @@ def recommendations(summary: Dict[str, Any], breakdowns: Dict[str, Optional[Dict
 
     if not idle:
         by_model = [m for m in (summary.get("by_model") or []) if isinstance(m, dict)]
-        if by_model and total > 0:
+        if by_model and material:
             top = max(by_model, key=lambda m: fnum(m.get("cost_usd")))
             if fnum(top.get("cost_usd")) / total >= 0.60:
                 out.append(
@@ -290,7 +302,7 @@ def recommendations(summary: Dict[str, Any], breakdowns: Dict[str, Optional[Dict
 
         src = breakdowns.get("source")
         non_gateway = sum(fnum(r.get("cost_usd")) for r in bucket_rows(src) if r.get("bucket") != "gateway")
-        if total > 0 and non_gateway / total >= 0.20:
+        if material and non_gateway / total >= 0.20:
             out.append(
                 "%d%% of spend (%s) was captured from telemetry or provider reports, not the gateway. Monthly "
                 "caps do not apply to it." % (share(non_gateway, total), money(non_gateway)))
@@ -322,9 +334,11 @@ def build_report(summary: Dict[str, Any], info: Optional[Dict[str, Any]] = None,
     if total <= 0 and calls <= 0:
         lines.append("- No usage recorded in this window")
     else:
-        lines.append("- Spend: %s across %s %s and %s tokens (about %s a day)" % (
+        per_day = total / days
+        lines.append("- Spend: %s across %s %s and %s tokens (%s a day)" % (
             money(total), count(calls), "call" if int(calls) == 1 else "calls",
-            tokens(totals.get("total_tokens")), money(total / days)))
+            tokens(totals.get("total_tokens")),
+            "about " + money(per_day) if per_day >= 0.005 else "under $0.01"))
         src_rows = sorted(bucket_rows(breakdowns.get("source")), key=lambda r: -fnum(r.get("cost_usd")))
         if src_rows:
             lines.append("- By capture source: " + "; ".join(

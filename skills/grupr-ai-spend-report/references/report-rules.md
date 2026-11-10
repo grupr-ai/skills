@@ -10,8 +10,10 @@ only if the script cannot run.
 - Tokens: `987`, `12.3K`, `412.6M`, `2.5B`. Calls: whole numbers with
   separators.
 - Shares are whole percentages of total spend in the window. When there is
-  nothing to divide by, print `n/a`; never print a percentage of zero.
-- Per-day spend is total spend divided by the days in the window.
+  nothing to divide by, print `n/a`. An amount above zero that rounds to 0%
+  prints as `<1%`, so spend is never shown as nothing.
+- Per-day spend is total spend divided by the days in the window; under half
+  a cent it prints as "under $0.01 a day".
 - Budget percentages are recomputed as month-to-date spend over the effective
   cap (cap plus approved raise) and rounded to a whole number.
 
@@ -48,6 +50,11 @@ so and still shows budgets, which are month-to-date.
 | R9 | A breakdown was truncated | That table covers the 200 largest buckets only |
 
 If nothing fires: "Nothing to flag."
+
+**Small windows.** R1, R2, R7 and R8 are about shares of spend. When total
+spend in the window is under $10 they are skipped, and one line says so:
+a share of a few cents is not a finding. The budget rules (R3 to R6) and R9
+are unaffected. The floor is `MIN_SPEND_FOR_SHARE_RULES` in the script.
 
 Revoked keys never trigger a rule. The rules state facts and name the control
 that exists in the product. They do not estimate savings, forecast spend, or

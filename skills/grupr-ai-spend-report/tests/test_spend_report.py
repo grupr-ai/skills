@@ -75,10 +75,11 @@ class GoldenReport(unittest.TestCase):
             code, out, _ = run(["report", "--dir", d, "--name", "Tiny Co"])
         self.assertEqual(code, 0)
         self.assertIn("# AI spend report: Tiny Co, 2026-11-02 to 2026-11-09 (7 days, UTC)", out)
-        self.assertIn("- Spend: <$0.01 across 1 call and 900 tokens", out)
+        self.assertIn("- Spend: <$0.01 across 1 call and 900 tokens (under $0.01 a day)", out)
+        self.assertNotIn("about <", out)
         for missing in ("## By department", "## By project", "## By model", "## By person", "## Budgets"):
             self.assertNotIn(missing, out)
-        self.assertIn("- Nothing to flag.", out)
+        self.assertIn("- Spend in this window is under $10.00, too little for share-based recommendations", out)
 
 
 class Formatting(unittest.TestCase):
@@ -99,6 +100,9 @@ class Formatting(unittest.TestCase):
         self.assertIsNone(sr.share(5, 0))
         self.assertEqual(sr.share(881.5, 6184.37), 14)
         self.assertEqual(sr.share_text(1, 0), "n/a")
+        self.assertEqual(sr.share_text(0.0003, 0.091), "<1%")  # spent something: never "0%"
+        self.assertEqual(sr.share_text(0.001, 0.091), "1%")
+        self.assertEqual(sr.share_text(0, 0.091), "0%")
 
     def test_table_cells_cannot_break_the_table(self):
         self.assertEqual(sr.cell("a|b\nc"), "a/b c")
@@ -193,6 +197,23 @@ class Rules(unittest.TestCase):
         self.assertTrue(any(x.startswith("20% of spend ($200.00) was captured from telemetry or provider reports") for x in r), r)
         r = self.recs(breakdowns={"source": self.bd(("gateway", 810), ("otel", 190))})
         self.assertEqual(r, ["Nothing to flag."])
+
+    def test_share_rules_need_enough_spend_to_mean_something(self):
+        # Seen on the first real run: 99% of nine cents is not a finding.
+        models = [{"provider": "anthropic", "model": "big", "cost_usd": 0.09}, {"provider": "openai", "model": "small", "cost_usd": 0.001}]
+        tiny = self.summary(cost=0.091, calls=17, models=models)
+        bds = {"department": self.bd(("(unassigned)", 0.09), ("Eng", 0.001)),
+               "project": self.bd(("(no project)", 0.05), ("Checkout", 0.041)),
+               "source": self.bd(("otel", 0.09), ("gateway", 0.001))}
+        r = self.recs(tiny, bds)
+        self.assertEqual(len(r), 1, r)
+        self.assertTrue(r[0].startswith("Spend in this window is under $10.00, too little for share-based recommendations"), r)
+        # budget rules still fire on a small window, and the floor itself is inclusive
+        r = self.recs(tiny, bds, {"keys": [self.key("k", 99, cap=100)]})
+        self.assertEqual(len(r), 2)
+        self.assertIn("80% or more", r[1])
+        at_floor = self.summary(cost=10.0, models=[{"provider": "a", "model": "m", "cost_usd": 10.0}])
+        self.assertTrue(any(x.startswith("100% of spend is one model") for x in self.recs(at_floor)))
 
     def test_truncated_breakdown_is_reported(self):
         r = self.recs(breakdowns={"department": self.bd(("Eng", 1000), truncated=True)})
