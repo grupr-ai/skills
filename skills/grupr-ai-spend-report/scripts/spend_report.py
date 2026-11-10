@@ -515,7 +515,10 @@ def cmd_fetch(args: argparse.Namespace, env: Optional[Dict[str, str]] = None, no
             hint = " The token is wrong, expired or revoked; an org admin can create a new one."
         elif e.status == 429 and e.retry_after:
             hint = " Wait %d seconds and run it again." % e.retry_after
-        print("error: GET %s was refused: %d %s. %s%s" % (e.path, e.status, e.code, e.message, hint), file=sys.stderr)
+        detail = e.message.rstrip()
+        if detail and detail[-1] not in ".!?":
+            detail += "."
+        print("error: GET %s was refused: %d %s. %s%s" % (e.path, e.status, e.code, detail, hint), file=sys.stderr)
         return 3
     except (urllib.error.URLError, OSError) as e:
         print("error: could not reach the API (%s)" % e.__class__.__name__, file=sys.stderr)

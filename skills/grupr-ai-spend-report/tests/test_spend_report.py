@@ -357,7 +357,7 @@ class Fetch(unittest.TestCase):
         code, out, err = self.fetch(env={sr.TOKEN_ENV: "gar_" + "00" * 32})
         self.assertEqual(code, 3)
         self.assertIn("401 unauthorized", err)
-        self.assertIn("an org admin can create a new one", err)
+        self.assertIn("revoked read token. The token is wrong, expired or revoked; an org admin can create a new one.", err)
         self.assertNotIn("gar_", err)
 
     def test_rate_limit_says_how_long_to_wait(self):
