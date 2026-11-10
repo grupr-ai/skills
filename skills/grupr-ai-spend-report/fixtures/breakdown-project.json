@@ -1,0 +1,33 @@
+{
+  "data": {
+    "dimension": "project",
+    "since": "2026-10-10T00:00:00Z",
+    "until": "2026-11-09T00:00:00Z",
+    "truncated": false,
+    "totals": {
+      "calls": 18420,
+      "total_tokens": 412600000,
+      "cost_usd": 6184.37
+    },
+    "rows": [
+      {
+        "bucket": "(no project)",
+        "calls": 9120,
+        "total_tokens": 198000000,
+        "cost_usd": 3053.87
+      },
+      {
+        "bucket": "Checkout rewrite",
+        "calls": 4100,
+        "total_tokens": 116000000,
+        "cost_usd": 1850.0
+      },
+      {
+        "bucket": "Support copilot",
+        "calls": 5200,
+        "total_tokens": 98600000,
+        "cost_usd": 1280.5
+      }
+    ]
+  }
+}

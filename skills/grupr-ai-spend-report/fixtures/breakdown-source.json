@@ -1,0 +1,27 @@
+{
+  "data": {
+    "dimension": "source",
+    "since": "2026-10-10T00:00:00Z",
+    "until": "2026-11-09T00:00:00Z",
+    "truncated": false,
+    "totals": {
+      "calls": 18420,
+      "total_tokens": 412600000,
+      "cost_usd": 6184.37
+    },
+    "rows": [
+      {
+        "bucket": "gateway",
+        "calls": 15900,
+        "total_tokens": 331600000,
+        "cost_usd": 4884.37
+      },
+      {
+        "bucket": "otel",
+        "calls": 2520,
+        "total_tokens": 81000000,
+        "cost_usd": 1300.0
+      }
+    ]
+  }
+}

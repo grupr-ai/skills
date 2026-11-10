@@ -1,0 +1,49 @@
+{
+  "data": {
+    "since": "2026-10-10T00:00:00Z",
+    "until": "2026-11-09T00:00:00Z",
+    "totals": {
+      "calls": 18420,
+      "total_tokens": 412600000,
+      "cost_usd": 6184.37
+    },
+    "by_model": [
+      {
+        "provider": "anthropic",
+        "model": "claude-sonnet-5-5",
+        "calls": 9200,
+        "prompt_tokens": 201000000,
+        "completion_tokens": 39400000,
+        "total_tokens": 240400000,
+        "cost_usd": 3961.2
+      },
+      {
+        "provider": "openai",
+        "model": "gpt-5.6",
+        "calls": 5100,
+        "prompt_tokens": 88000000,
+        "completion_tokens": 14200000,
+        "total_tokens": 102200000,
+        "cost_usd": 1512.4
+      },
+      {
+        "provider": "google",
+        "model": "gemini-3.8-flash",
+        "calls": 2900,
+        "prompt_tokens": 47000000,
+        "completion_tokens": 8000000,
+        "total_tokens": 55000000,
+        "cost_usd": 590.77
+      },
+      {
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "calls": 1220,
+        "prompt_tokens": 12600000,
+        "completion_tokens": 2400000,
+        "total_tokens": 15000000,
+        "cost_usd": 120.0
+      }
+    ]
+  }
+}

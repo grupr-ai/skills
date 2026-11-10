@@ -57,6 +57,7 @@ the `SKILL.md` format used by Claude Code, Codex, Cursor and the
 | Skill | What it does | Install |
 |---|---|---|
 | [grupr-agent-usage-report](./skills/grupr-agent-usage-report/) | Read-only report of one Grupr agent's sandbox time against its daily budget, denied and failed commands, routine health and connection refusals, via the Grupr MCP connector or saved agent-hub JSON | `npx skills add grupr-ai/skills --skill grupr-agent-usage-report -a claude-code` |
+| [grupr-ai-spend-report](./skills/grupr-ai-spend-report/) | Read-only report of an organization's AI spend from Grupr Analytics: total, by department, project, model and capture source, virtual-key budgets against monthly caps, pending overage requests. Uses an Analytics read token; never prints it. | `npx skills add grupr-ai/skills --skill grupr-ai-spend-report -a claude-code` |
 
 Each agent skill folder has its own README with what it reads, what it never
 does, and how to run its tests. The skills.sh CLI reports anonymous install

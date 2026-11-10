@@ -1,0 +1,25 @@
+{
+  "data": {
+    "org": {
+      "org_id": "00000000-0000-4000-8000-000000000001",
+      "name": "Northwind Holdings (sample)"
+    },
+    "token": {
+      "name": "monthly board report",
+      "allow_people": false,
+      "expires_at": "2027-02-07T00:00:00Z"
+    },
+    "scope": "analytics:read",
+    "dimensions": [
+      "department",
+      "function",
+      "model",
+      "project",
+      "provider",
+      "source",
+      "sub_department",
+      "tag"
+    ],
+    "max_range_days": 366
+  }
+}

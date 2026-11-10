@@ -1,0 +1,90 @@
+{
+  "data": {
+    "month_start": "2026-11-01T00:00:00Z",
+    "as_of": "2026-11-09T12:00:00Z",
+    "keys": [
+      {
+        "key_id": "00000000-0000-4000-8000-0000000000a1",
+        "name": "eng-shared",
+        "department": "Engineering",
+        "team": "Platform",
+        "tag": "coding",
+        "status": "active",
+        "monthly_cap_usd": 2000,
+        "approved_raise_usd": 0,
+        "effective_cap_usd": 2000,
+        "spend_mtd_usd": 1710.4,
+        "remaining_usd": 289.6,
+        "percent_used": 85.5,
+        "last_used_at": "2026-11-09T11:58:00Z"
+      },
+      {
+        "key_id": "00000000-0000-4000-8000-0000000000a2",
+        "name": "support-bot",
+        "department": "Support",
+        "team": "",
+        "tag": "support",
+        "status": "active",
+        "monthly_cap_usd": 400,
+        "approved_raise_usd": 100,
+        "effective_cap_usd": 500,
+        "spend_mtd_usd": 512.3,
+        "remaining_usd": -12.3,
+        "percent_used": 102.5,
+        "last_used_at": "2026-11-09T09:14:00Z"
+      },
+      {
+        "key_id": "00000000-0000-4000-8000-0000000000a3",
+        "name": "marketing-drafts",
+        "department": "Marketing",
+        "team": "",
+        "tag": "content",
+        "status": "active",
+        "monthly_cap_usd": 300,
+        "approved_raise_usd": 0,
+        "effective_cap_usd": 300,
+        "spend_mtd_usd": 41.1,
+        "remaining_usd": 258.9,
+        "percent_used": 13.7,
+        "last_used_at": "2026-11-07T16:02:00Z"
+      },
+      {
+        "key_id": "00000000-0000-4000-8000-0000000000a4",
+        "name": "data-science",
+        "department": "",
+        "team": "",
+        "tag": "",
+        "status": "active",
+        "monthly_cap_usd": null,
+        "approved_raise_usd": 0,
+        "effective_cap_usd": null,
+        "spend_mtd_usd": 233.05,
+        "remaining_usd": null,
+        "percent_used": null,
+        "last_used_at": "2026-11-08T20:40:00Z"
+      },
+      {
+        "key_id": "00000000-0000-4000-8000-0000000000a5",
+        "name": "old-pilot",
+        "department": "Engineering",
+        "team": "",
+        "tag": "",
+        "status": "revoked",
+        "monthly_cap_usd": 100,
+        "approved_raise_usd": 0,
+        "effective_cap_usd": 100,
+        "spend_mtd_usd": 0,
+        "remaining_usd": 100,
+        "percent_used": 0,
+        "last_used_at": null
+      }
+    ],
+    "totals": {
+      "keys": 5,
+      "capped_keys": 3,
+      "effective_cap_usd": 2800,
+      "spend_mtd_usd": 2496.85
+    },
+    "pending_overage_requests": 1
+  }
+}
